@@ -5,12 +5,9 @@ if [ -f /etc/bashrc ]; then
   . /etc/bashrc
 fi
 
-export PATH="/usr/bin:$PATH:$HOME/.local/bin"
 
-# when shell exits, append to history file, don't overwrite
-shopt -s histappend
-# save and reload history after each command finishes.
-export PROMPT_COMMAND="history -a; history -c; history -r; $PROMPT_COMMAND"
+
+# BEGIN optional stuff
 
 colorize()
 {
@@ -70,48 +67,6 @@ unset END_CHAR
 # 44 for blue background
 # 4 for underlined
 
-
-# infinite command history
-HISTCONTROL=
-HISTSIZE=
-HISTFILESIZE=
-HISTTIMEFORMAT="%y-%m-%d %T "
-
-
-
-# User specific aliases and functions
-alias lm='ls -lrt'
-alias lk='ls -lrtah'
-alias ll='ls -l'
-alias la='ls -a'
-alias lrt='ls -lrt'
-alias l='ls'
-
-alias v='vim'
-alias vimr='vim -R'
-alias vr='vim -R'
-# readonly vim, keeps syntax highlighting (unlike 'view' cmd). use if know that file is already opened in another vim process.
-
-alias c='clear'
-alias d='date'
-# alias mv='mv -iv'; # ask before overwrite and be verbose
-# alias rm='rm -iv'; # ask before every remove and be verbose
-
-# git aliases
-alias gst='git status'
-alias gcho='git checkout'
-alias gbr='git branch'
-alias gdiff='git diff'
-alias gadd='git add'
-gitbranchsimple() {
-  git branch | grep "^\* " | head -n1 | sed 's/^\* \(.*\)/\1/'
-}
-gitsetupstream() {
-  local BRANCH="$(gitbranchsimple)"
-  git branch --set-upstream-to=origin/"$BRANCH" "$BRANCH"
-}
-
-
 # takes filenames as input and moves them to apped just
 # a .bkp on the end. If that somehow exists, will also append
 # current datetime to that file.
@@ -162,18 +117,6 @@ alias rmf='rm -f'
 
 alias cd-="cd -"
 
-alias ls='ls --color=auto'
-alias dir='dir --color=auto'
-alias vdir='vdir --color=auto'
-alias grep='grep --color=auto'
-alias fgrep='fgrep --color=auto'
-alias egrep='egrep --color=auto'
-
-# extra grep aliases
-alias igrep='grep -i'
-alias egrep='grep -E'
-alias eigrep='grep -Ei'
-
 # open gui calculator
 alias calc='gnome-calculator'
 alias binview='xxd -b'
@@ -204,7 +147,6 @@ alias mcc='mvn clean compile'
 alias mccti='mvn clean compile test install'
 
 alias openpdf='evince'
-
 
 # default browser command - opens mozilla firefox browser
 goog()
@@ -289,3 +231,73 @@ neton()
     esac
   done
 }
+
+
+# END optional stuff
+
+
+
+# BEGIN important stuff
+
+# Sometimes some of these are missing from base PATH
+export PATH="/usr/bin:$PATH:$HOME/.local/bin:/usr/sbin:/sbin"
+
+# infinite command history
+HISTCONTROL=
+HISTSIZE=
+HISTFILESIZE=
+HISTTIMEFORMAT="%y-%m-%d %T "
+
+# when shell exits, append to history file, don't overwrite
+shopt -s histappend
+# save and reload history after each command finishes.
+export PROMPT_COMMAND="history -a; history -c; history -r; $PROMPT_COMMAND"
+
+# User specific aliases and functions
+alias lm='ls -lrtA'
+alias lk='ls -lrtah'
+alias ll='ls -lA'
+alias la='ls -a'
+alias lrt='ls -lrt'
+alias l='ls'
+
+# readonly vim, keeps syntax highlighting (unlike 'view' cmd). use if know that file is already opened in another vim process.
+alias v='vim'
+alias vimr='vim -R'
+alias vr='vim -R'
+
+alias c='clear'
+alias d='date'
+# alias mv='mv -iv'; # ask before overwrite and be verbose
+# alias rm='rm -iv'; # ask before every remove and be verbose
+
+# git aliases
+alias gst='git status'
+alias gcho='git checkout'
+alias gbr='git branch'
+alias gdiff='git diff'
+alias gadd='git add'
+# gs is sometimes "GhostScript" which opens a GUI. Annoying when accidentally typed
+alias gs='git status'
+
+gitbranchsimple() {
+  git branch | grep "^\* " | head -n1 | sed 's/^\* \(.*\)/\1/'
+}
+gitsetupstream() {
+  local BRANCH="$(gitbranchsimple)"
+  git branch --set-upstream-to=origin/"$BRANCH" "$BRANCH"
+}
+
+alias ls='ls --color=auto'
+alias dir='dir --color=auto'
+alias vdir='vdir --color=auto'
+alias grep='grep --color=auto'
+alias fgrep='fgrep --color=auto'
+alias egrep='egrep --color=auto'
+
+# extra grep aliases
+alias igrep='grep -i'
+alias egrep='grep -E'
+alias eigrep='grep -Ei'
+
+# END important stuff. Some the final aliases above aren't really that important.
