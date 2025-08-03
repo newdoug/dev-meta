@@ -1,12 +1,9 @@
+" BEGIN Optional stuff
+
 " PLUGINS START
 " use pathogen - makes it easy to install plugins
 " execute pathogen#infect()
 
-" smart indenting based on file type
-filetype indent plugin on
-
-" set nocp
-filetype plugin on
 
 " for the 'a.vim' plugin:
 " use :AS and :AV for swtiching and splitting
@@ -128,6 +125,133 @@ filetype plugin on
 
 " PLUGINS END
 
+
+" TODO: mapping for tabbing and untabbing lines when in visual line mode
+
+" other built-in shortcuts:
+" `` goes to last cursor line and column
+" '' goes to beginning of last line
+" '. goes to last changed line
+" gg to top of file
+" G to bottom of file
+" :<num>winc> move <num> of columns/rows to the right. Use < for left. Down?
+" Up?
+" D deletes rest of contents in line from cursor. So, <end>D or 0D will delete
+" entire line text, but keep the new line
+" L moves to bottom line on screen (not of file)
+" M moves to middle line on screen (not of file)
+" H moves to top line on screen (not of file)
+" % moves to matching bracket {} [] or ()
+" <num>k moves cursor <num> lines up
+" <num>j moves cursor <num> lines down
+" gu makes whole line lowercase 
+" gU makes whole line uppercase
+" g~ swaps case of whole line 
+"
+" MARKS:
+"   mx sets mark x at current cursor position
+"   'x go to beginning of line of mark x
+"   `x go to cursor position of mark x
+"
+
+" timeout (unit = millis) on mappings after 2 seconds, on key codes after 1 second
+set timeout timeoutlen=2000 ttimeoutlen=1000
+
+" default comment character
+let g:COMMENT_CHAR = '#'
+
+" set default comment character(s) for certain file extensions
+autocmd BufReadPost,BufNewFile *.py,*.sh,*.bash,*.pl let g:COMMENT_CHAR = '#'
+autocmd BufReadPost,BufNewFile *.c,*.h,*.cpp,*.hpp,*.hxx let g:COMMENT_CHAR = '//'
+autocmd BufReadPost,BufNewFile *.vimrc,*.vim let g:COMMENT_CHAR = '"'
+autocmd BufReadPost,BufNewFile *.sql,*.lua let g:COMMENT_CHAR = '--'
+function! CommentLine()
+  execute ':s/^/' . g:COMMENT_CHAR . ' /'
+endfunction
+
+function! UncommentLine()
+  execute ':s/^' . g:COMMENT_CHAR . '[ ]\=/'
+endfunction
+
+" comment out current line
+nnoremap <silent> <leader>cc :call CommentLine()<CR>
+" uncomment out current line, removing one space character if it's present
+nnoremap <silent> <leader>cu :call UncommentLine()<CR>
+nnoremap <F6> <cr>COMMENT_CHAR<CR>
+
+
+" press <F2> to display current datetime
+nnoremap <F2> :echo 'Current time is ' . strftime('%c')<CR>
+
+" nnoremap <F5> :call Preserve("%!astyle -s2")<CR>
+" maps CTRL-F12 to generate CTAG of current directory (useful for CPP project
+" autocompletion for omnicppcomplete)
+" map <C-F12> :!ctags -R --sort=yes --c++-kinds=+p --fields=+iaS --extra=+q .<CR>
+" the comment nerd plugin takes <num>\cc and comments that many below lines.
+" This is a shortcut to comment the current line
+map cc 1<leader>cc<CR>
+map cu 1<leader>cu<CR>
+
+"<Left>
+nnoremap <F3> ^ 
+
+" Puts in the current git status
+" if count(g:pathogen_disabled, 'Fugitive') < 1   
+" set statusline+=%{fugitive#statusline()}
+" endif
+" 
+" " Puts in syntastic warnings
+" if count(g:pathogen_disabled, 'Syntastic') < 1  
+" set statusline+=%#warningmsg#
+" set statusline+=%{SyntasticStatuslineFlag()}
+" set statusline+=%*
+" endif
+
+" Only do this part when compiled with support for autocommands
+" if has("autocmd")
+"   augroup redhat
+"     autocmd!
+"     " In text files, always limit the width of text to 78 characters
+"     " autocmd BufRead *.txt set tw=78
+"     " When editing a file, always jump to the last cursor position
+"     autocmd BufReadPost *
+"           \ if line("'\"") > 0 && line ("'\"") <= line("$") |
+"           \   exe "normal! g'\"" |
+"           \ endif
+"     " don't write swapfile on most commonly used directories for NFS mounts or USB sticks
+"     autocmd BufNewFile,BufReadPre /media/*,/run/media/*,/mnt/* set directory=~/tmp,/var/tmp,/tmp
+"     " start with spec file template
+"     autocmd BufNewFile *.spec 0r /usr/share/vim/vimfiles/template.spec
+"   augroup END
+" endif
+
+" statusline customization
+" function! InsertStatuslineColor(mode)
+"   if a:mode == 'i'
+"     hi statusline guibg=Cyan ctermfg=6 guifg=Black ctermbg=0
+"   elseif a:mode == 'r'
+"     hi statusline guibg=Purple ctermfg=5 guifg=Black ctermbg=0
+"   else
+"     hi statusline guibg=DarkRed ctermfg=1 guifg=Black ctermbg=0
+"   endif
+" endfunction
+
+" au InsertEnter * call InsertStatuslineColor(v:insertmode)
+" au InsertLeave * hi statusline guibg=DarkGrey ctermfg=8 guifg=White ctermbg=15
+
+" default the statusline to green when entering Vim
+" hi statusline guibg=DarkGrey ctermfg=8 guifg=White ctermbg=15
+ 
+" END Optional stuff
+
+
+" BEGIN important stuff
+
+" smart indenting based on file type
+filetype indent plugin on
+
+" set nocp
+filetype plugin on
 " return back to original cursor position after running a command.
 " must call Preserve(<your command here>) for this to work
 function! Preserve(command)
@@ -141,11 +265,9 @@ function! Preserve(command)
   call winrestview(w)
 endfunction
 
-
 function! HighlightOff()
   :noh
 endfunction
-
 
 set hidden
 " better auto-complete
@@ -160,9 +282,6 @@ set hlsearch
 " search incrementally (search while typing)
 set incsearch
 
-" timeout (unit = millis) on mappings after 2 seconds, on key codes after 1 second
-set timeout timeoutlen=2000 ttimeoutlen=1000
-
 " set smartcase
 
 " smart indenting
@@ -176,7 +295,6 @@ set expandtab
 
 " smart backspace over autoindent, EOL, insert start
 set backspace=indent,eol,start
-
 
 function! SetTabLengthRange() range
   let &l:shiftwidth = v:count
@@ -218,55 +336,19 @@ set confirm
 " don't allow mouse usage
 set mouse=
 
-" set number        " displays line numbers
-
-" default comment character
-let g:COMMENT_CHAR = '#'
-
-" set default comment character(s) for certain file extensions
-autocmd BufReadPost,BufNewFile *.py,*.sh,*.bash,*.pl let g:COMMENT_CHAR = '#'
-autocmd BufReadPost,BufNewFile *.c,*.h,*.cpp,*.hpp,*.hxx let g:COMMENT_CHAR = '//'
-autocmd BufReadPost,BufNewFile *.vimrc,*.vim let g:COMMENT_CHAR = '"'
-autocmd BufReadPost,BufNewFile *.sql,*.lua let g:COMMENT_CHAR = '--'
-
 " set file indentation based on certain file extensions
 autocmd BufReadPost,BufNewFile *.py,*.java,*.xml :call SetTabLength(4)
 autocmd BufReadPost,BufNewFile *.vimrc,*.vim,*.lua,*.sql,*.sh,*.bash,*.pl,*.html,*.js,*.c,*.h,*.cpp,*.hpp,*.hxx,*.rb :call SetTabLength(2)
 
-" set default line length to 80 characters
-autocmd BufRead *.py,*.txt,*.c,*.h,*.hpp,*.cpp,*.hxx set tw=80
+" Set default line length
+autocmd BufRead *.py,*.txt,*.c,*.h,*.hpp,*.cpp,*.hxx,*.md,*.sh,*.bash,*.adoc set tw=100
 
-function! CommentLine()
-  execute ':s/^/' . g:COMMENT_CHAR . ' /'
-endfunction
-
-function! UncommentLine()
-  execute ':s/^' . g:COMMENT_CHAR . '[ ]\=/'
-endfunction
-
-" comment out current line
-nnoremap <silent> <leader>cc :call CommentLine()<CR>
-" uncomment out current line, removing one space character if it's present
-nnoremap <silent> <leader>cu :call UncommentLine()<CR>
-nnoremap <F6> <cr>COMMENT_CHAR<CR>
-
-
-" press <F2> to display current datetime
-nnoremap <F2> :echo 'Current time is ' . strftime('%c')<CR>
 " press <F4> to fix indentation in entire file
 " nnoremap <F4> gg=G``      " also works
 nnoremap <F4> :call Preserve("normal gg=G")<CR>
-" nnoremap <F5> :call Preserve("%!astyle -s2")<CR>
-" maps CTRL-F12 to generate CTAG of current directory (useful for CPP project
-" autocompletion for omnicppcomplete)
-" map <C-F12> :!ctags -R --sort=yes --c++-kinds=+p --fields=+iaS --extra=+q .<CR>
-" the comment nerd plugin takes <num>\cc and comments that many below lines.
-" This is a shortcut to comment the current line
-map cc 1<leader>cc<CR>
-map cu 1<leader>cu<CR>
 " set ignorecase for when searching
 nnoremap <leader>ii :set ignorecase<CR>
-nnoremap <leader>iu :set noignorecase<CR>
+nnoremap <leader>io :set noignorecase<CR>
 
 " enable/disable paste from clipboard
 nnoremap <leader>pp :set paste<CR>
@@ -274,47 +356,9 @@ nnoremap <leader>po :set nopaste<CR>
 " every time hit <enter>, clear most recent search
 " <silent> means don't show command in bottom left
 nnoremap <silent> <CR> :noh<CR><CR>
-"<Left>
-nnoremap <F3> ^ 
 nnoremap <leader>tl :call SetTabLengthRange()<CR>
 " copy whole file into default buffer
 nnoremap <leader>cpa :call Preserve("normal ggVGy")<CR>
-
-
-" Only do this part when compiled with support for autocommands
-" if has("autocmd")
-"   augroup redhat
-"     autocmd!
-"     " In text files, always limit the width of text to 78 characters
-"     " autocmd BufRead *.txt set tw=78
-"     " When editing a file, always jump to the last cursor position
-"     autocmd BufReadPost *
-"           \ if line("'\"") > 0 && line ("'\"") <= line("$") |
-"           \   exe "normal! g'\"" |
-"           \ endif
-"     " don't write swapfile on most commonly used directories for NFS mounts or USB sticks
-"     autocmd BufNewFile,BufReadPre /media/*,/run/media/*,/mnt/* set directory=~/tmp,/var/tmp,/tmp
-"     " start with spec file template
-"     autocmd BufNewFile *.spec 0r /usr/share/vim/vimfiles/template.spec
-"   augroup END
-" endif
-
-" statusline customization
-" function! InsertStatuslineColor(mode)
-"   if a:mode == 'i'
-"     hi statusline guibg=Cyan ctermfg=6 guifg=Black ctermbg=0
-"   elseif a:mode == 'r'
-"     hi statusline guibg=Purple ctermfg=5 guifg=Black ctermbg=0
-"   else
-"     hi statusline guibg=DarkRed ctermfg=1 guifg=Black ctermbg=0
-"   endif
-" endfunction
-
-" au InsertEnter * call InsertStatuslineColor(v:insertmode)
-" au InsertLeave * hi statusline guibg=DarkGrey ctermfg=8 guifg=White ctermbg=15
-
-" default the statusline to green when entering Vim
-" hi statusline guibg=DarkGrey ctermfg=8 guifg=White ctermbg=15
 
 " Formats the statusline
 set statusline=%f                           " file name
@@ -324,50 +368,10 @@ set statusline+=%y      "filetype
 set statusline+=%h      "help file flag
 set statusline+=%m      "modified flag
 set statusline+=%r      "read only flag
-
-" Puts in the current git status
-" if count(g:pathogen_disabled, 'Fugitive') < 1   
-" set statusline+=%{fugitive#statusline()}
-" endif
-" 
-" " Puts in syntastic warnings
-" if count(g:pathogen_disabled, 'Syntastic') < 1  
-" set statusline+=%#warningmsg#
-" set statusline+=%{SyntasticStatuslineFlag()}
-" set statusline+=%*
-" endif
-
 set statusline+=\ %=                        " align left
 set statusline+=Line:%l/%L[%p%%]            " line X of Y [percent of file]
 set statusline+=\ Col:%c                    " current column
 set statusline+=\ Buf:%n                    " Buffer number
 set statusline+=\ [%b][0x%B]              " ASCII and byte code under cursor
 
-
-" TODO: mapping for tabbing and untabbing lines when in visual line mode
-
-" other built-in shortcuts:
-" `` goes to last cursor line and column
-" '' goes to beginning of last line
-" '. goes to last changed line
-" gg to top of file
-" G to bottom of file
-" :<num>winc> move <num> of columns/rows to the right. Use < for left. Down?
-" Up?
-" D deletes rest of contents in line from cursor. So, <end>D or 0D will delete
-" entire line text, but keep the new line
-" L moves to bottom line on screen (not of file)
-" M moves to middle line on screen (not of file)
-" H moves to top line on screen (not of file)
-" % moves to matching bracket {} [] or ()
-" <num>k moves cursor <num> lines up
-" <num>j moves cursor <num> lines down
-" gu makes whole line lowercase 
-" gU makes whole line uppercase
-" g~ swaps case of whole line 
-"
-" MARKS:
-"   mx sets mark x at current cursor position
-"   'x go to beginning of line of mark x
-"   `x go to cursor position of mark x
-"
+" END important stuff
