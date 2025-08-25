@@ -1,0 +1,95 @@
+= Projects Summary
+
+Summaries of projects I'll be doing that I won't mind sharing at some point.
+
+== MLC
+
+A bit of a low-down project. Has some machine learning involved, very cool.
+
+== xrayvault
+
+Basically a web scraper with a leaning towards actually useful types of technical data.
+Not a fan of the name.
+Think firmware for various devices, installers, source control repositories, software manuals, hardware manuals, specifications, standards, etc.
+Does a lot of processing on the data though.
+Like unzipping, unarchiving, unpacking filesystems, running `file`, `binwalk`, `binwalk3`, custom analyzers, etc. on each file and unarchived/unzipped file and directory, tagging everything for search and comparisons later.
+Want to easily find "similar" files in here.
+One feature is to find pieces of one file in others and call that "similarity".
+Potentially would query local LLM(s) about some files too to see what they can figure out.
+Some things done in the `MLC` project may be useful here.
+The `bitdiag` project may also be useful here.
+
+TODO: lots more ideas on phone. Add them here.
+
+== bitdiag
+
+"Bit diagnostics".
+Basically pattern detection in sets of data.
+Ever get like a million packets of some unknown format and you have to manually pick through them figuring out which ones are constants, which ones are counters, how many bits the counter is, whether there are timestamps, etc.?
+This will figure that out (some of it at least) for you.
+
+== URAID
+
+User RAID software solution.
+Some ideas on how to implement basic data backup solutions without resorting to full on RAID and without stressing out the drives too often.
+For the most part, the best solution to this for most people is probably paying for online storage with a vendor that won't delete your data and by encrypting the data yourself first (correctly).
+This lets big server farms or whatever deal with the potentially complex tasks related to proper redundancies and backups and long-term data storage.
+
+== Easy Crypto Tools
+
+In URAID, I mentioned encrypting files correctly and yourself.
+This project will contain a few solutions that hopefully anyone can use themselves with ease to properly encrypt their data before throwing it in the cloud for safe storage.
+This will of course provide the decryption tools for when you want to pull your data down.
+All open source so users can review to make sure they're okay with the implementation or in case they want to decrypt it themselves some other way and just need to see data layouts or whatever.
+Will also contain some features that make it easy to put encrypted files into, say, GitHub.
+I think that's useful to store code you really don't want shared with others a little bit secretly.
+In case GitHub or some other source control thing starts to not like that idea and implement preventative measures against that, make it difficult for them to do so (maybe some steg, anti-anti-virus, anti-debugging, anti-RE type stuff)
+
+== notifmotif
+
+Basically just a multi-faceted notification library that is usable in lots of different environments (readline-based CLI applications, tmux-style applications, GUIs, just email notifications about things that happen on your computer, etc.).
+Just wanted some of this functionality in more than one other project of mine, so figured I'd make it into a bit of a reusable library.
+
+== Linux Kernel Userspace Crypto
+
+There is a crypto API in userspace on Linux that is implemented in the kernel.
+I only recently learned this was a thing.
+Why isn't that getting used more rather than OpenSSL, MbedTLS, WolfSSL, etc?
+I found the API docs a little...not great, so I just want to create a repo that implements some easy to understand and easy to reuse examples for common ciphers like AES CBC, XTS, GCM, RSA, whatever lese is available.
+The source code to cryptsetup (`apt source cryptsetup`) in file `lib/crypto_backend/crypto_cipher_kernel.c` and other nearby files may be a good reference resource.
+
+== GNU Tools in Python
+
+First though was "I wish I could use `grep` in Python without having to call a subprocess."
+But also didn't want to re-implement the algorithms in Python because that seems like it would needlessly introduce bugs and would be much slower.
+And then I thought maybe we could just easily interface with the existing C functions with Python with some wrapper code so we can re-use the C implementation of this stuff write in Python.
+Now why not do this with lots of other GNU tools like gawk, find, ?
+Assuming licensing stuff isn't an issue, I think this could be cool.
+
+== Maybes
+
+These are just random ideas I've had that idk if I'll go through with.
+
+=== SSH Multi-monitor thing
+
+Basically might be nice to be able to use a machine in another part of the house that has multiple monitors without being at that machine.
+The idea is kinda like an SSH/RDP type thing, but auto-detecting the destination machine's monitor setup or something and creating an easy-to-use multi-desktop thing from all of that.
+Hopefully without messing up the destination machine's window layouts.
+Honestly not sure this is worth doing.
+
+=== Window Session Saving
+
+Like the feature in web browsers that save your last used tabs and then just open them back up when you open the browser again?
+Hate it when you have to shut down your machine (laptops) and have to close all of your terminals and VMs and whatnot?
+This will basically do the web browser session save thing, but for desktop environments.
+Specifically tailored for technical users a bit so as to handle special cases like "what does it mean to 'save' a terminal session?"
+Kinda along with the SSH multi-monitor thing, but not really.
+
+=== Browser tab/session saving for private mode
+
+I browse in private mode on my phone pretty much always.
+I often open a bunch of tabs on a couple subjects and have to go away and come back to them later.
+Unfortunately, sometimes the browser just...dies or auto-updates or some battery saving phone feature decided to kill it or something.
+This means I lose those tabs.
+Sure, I could just browse in non-private mode, but I like the benefits that private mode gives me.
+I just want the ability to save off those tabs so I can come back to them later (still in private mode) and close and forget about them when I'm ready to close and forget about them.

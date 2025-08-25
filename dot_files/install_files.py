@@ -7,7 +7,7 @@ import sys
 
 
 SCRIPT_DIR = os.path.dirname(os.path.expanduser(os.path.realpath(__file__)))
-DEFAULT_DOT_FILES_DIR = os.path.join(SCRIPT_DIR, "dot_files")
+DEFAULT_DOT_FILES_DIR = SCRIPT_DIR
 
 DEFAULT_DOT_FILES = {
     ".valgrindrc",
@@ -57,7 +57,6 @@ def install_dot_files(dest: str, bkp: bool = True):
         install_dot_file(dest, dot_file, bkp=bkp)
 
 
-
 def main() -> int:
     parser = argparse.ArgumentParser(description="install current dot files into home directory")
     parser.add_argument("--no-bkp", help="Don't backup currently installed dot files if they exist", action="store_true")
@@ -78,4 +77,3 @@ def main() -> int:
 
 if __name__ == '__main__':
     sys.exit(main())
-
