@@ -1,1 +1,6 @@
 *priv*
+*.log
+*.tar.[gx]z
+*.tgz
+*.dsc
+*.deb

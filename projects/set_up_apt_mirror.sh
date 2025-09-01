@@ -8,9 +8,21 @@ if ! command -v debmirror >/dev/null; then
 fi
 
 DEFAULT_COMPS="main,contrib,non-free,non-free-firmware,main/debian-installer,restricted,universe,multiverse"
+DEFAULT_HOST="archive.ubuntu.com"
+DEFAULT_ROOT="ubuntu"
+
+if [ -z "$HOST" ]; then
+  printf "Default host '%s' being used (Ubuntu)\n" "${DEFAULT_HOST}"
+  HOST="${DEFAULT_HOST}"
+fi
+if [ -z "$ROOT" ]; then
+  printf "Default root '%s' being used (Ubuntu)\n" "${DEFAULT_ROOT}"
+  ROOT="${DEFAULT_ROOT}"
+fi
 
 full_distros() {
   echo "$1,$1-security,$1-updates,$1-proposed,$1-backports"
+  #echo "$1,$1-security,$1-updates,$1-backports"
 }
 
 usage() {
@@ -48,8 +60,9 @@ if [ "$SPACEAVAILK" -lt "$((250*1024*1024))" ]; then
   fi
 fi
 
-echo debmirror --progress -v -h us.archive.ubuntu.com -r ubuntu --method rsync --passive --source --i18n --diff=mirror -d "$DISTROS" -s "$COMPS" -a all,i386,amd64 --ignore-release-gpg  "$DST"
+echo debmirror --progress -v -h "$HOST" -r "$ROOT" --timeout=$((45*60)) --passive --source --i18n --diff=mirror -d "$DISTROS" -s "$COMPS" -a i386,amd64 --ignore-release-gpg --no-check-gpg "$DST"
 if [ -z "$DRY" ]; then
-  debmirror --progress -v -h us.archive.ubuntu.com -r ubuntu --method rsync --passive --source --i18n --diff=mirror -d "$DISTROS" -s "$COMPS" -a all,i386,amd64 --ignore-release-gpg  "$DST"
+  debmirror --progress -v -h "$HOST" -r "$ROOT" --timeout=$((45*60)) --passive --source --i18n --diff=mirror -d "$DISTROS" -s "$COMPS" -a i386,amd64 --ignore-release-gpg --no-check-gpg "$DST"
 fi
+# Original command I saw
 #debmirror -p -v -h ftp.belnet.be -r mirror/ubuntu.com --method ftp --passive -d xenial,xenial-security,xenial-updates -a i386,amd64 --ignore-release-gpg  /path/to/usb-disk/ubuntu-xenial/
