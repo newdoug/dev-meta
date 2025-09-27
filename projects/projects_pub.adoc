@@ -19,7 +19,7 @@ Potentially would query local LLM(s) about some files too to see what they can f
 Some things done in the `MLC` project may be useful here.
 The `bitdiag` project may also be useful here.
 
-TODO: lots more ideas on phone. Add them here.
+More information is available in the README in the repo.
 
 == bitdiag
 
@@ -69,6 +69,54 @@ Assuming licensing stuff isn't an issue, I think this could be cool.
 == Maybes
 
 These are just random ideas I've had that idk if I'll go through with.
+
+=== Multi-platform Screenshot
+
+For each common platform, implement as many "screenshot" implementations as possible.
+
+OS's: Linux, Windows, OSX, Unix
+
+Windows and OSX probably have 1-3 different methods each and have a consistent set of GUI API functions.
+So implement maybe once, which possible differences between versions that probably aren't too difficult.
+
+Linux and Unix have many different GUI applications possible.
+Maybe make this into a library that basically supports a lot of them and is kinda middleware to provide a common interface that just works no matter where.
+Here is how that would work:
+
+* Enumerate logged in users
+* Enumerate each screen/display for each user
+* Detect the process associated with that display.
+* dlopen/dlsym appropriate symbols for that found display.
+* Call the appropriate functions to capture screenshot on each screen.
+
+If there's an error in the above, could just try to load all known GUI application symbols and try taking a screenshot with each, which is a little bit brute force and gross, but would be more "sure" to not miss anything.
+
+Linux/Unix graphical applications to try to support:
+
+* GNOME
+* KDE
+* MATE
+* i3
+* Etc.
+
+==== Non-GUIs
+
+For example, headless servers.
+Unix, Linux, Windows(?), etc.
+Capture framebuffer?
+There may be some other ways to just capture what's on the terminal screen.
+
+=== Re-implement various servers in Python
+
+As a teaching exercise, implement various servers in Python. Python is simple enough that readers can easily understand what's going on usually.
+
+Example servers:
+
+* FTP (ftpd)
+* SFTP (sftpd)
+* TFTP (tftpd)
+* Basic HTTP server
+* Basic HTTPS server?
 
 === SSH Multi-monitor thing
 
