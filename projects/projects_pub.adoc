@@ -99,6 +99,10 @@ Would also need access to a lot of data that may not be easy to find/obtain.
   * To be clear, I mean something similar to what law enforcement does in criminal investigations with identifiers like this.
 Like "this serial number was in lot <X> in country <C>, state/city <blah>, and went to stores <here> to be sold or was sent to <this exact user at this exact address> on Amazon".
   * Doesn't actually have to be unique identifiers like serial numbers - if it's something unique enough like a collector's edition or limited release version of something, can also narrow things down.
+* There should probably be an ability to mark Exif info for particular images (or a set of images or all images from a particular source, etc.) as unreliable or incorrect and then re-train or re-calculate stuff as necessary.
+  * Also could include ability to say "this photo or these photos or all photos from this source are only slightly inaccurate, so weigh them less than other data".
+  * Similarly, should be able to mark images (as a human) and the location information as "this is definitely correct and has 100% accuracy" or "this seems almost correct, but it might be a little off (e.g., correct city, but incorrect or unsure about exact location).
+    * When ingesting particular data sets, capture certainty/trust level of data from that source and weight the information accordingly.
 
 == Maybes
 
