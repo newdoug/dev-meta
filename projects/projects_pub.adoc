@@ -66,6 +66,40 @@ And then I thought maybe we could just easily interface with the existing C func
 Now why not do this with lots of other GNU tools like gawk, find, ?
 Assuming licensing stuff isn't an issue, I think this could be cool.
 
+== Creeper (image and/or video -> location)
+
+Name still TBD, just came up with something quick.
+The idea is basically: given an image or a video or multiple images and/or videos, determine where the image or video was taken as precisely as possible.
+Basically geoguesser solver type of application, but more general and cool.
+This is mostly for if Exif data is gone or is untrusted, but it will probably also summarize that to the user with the a caveat of something like "this is exif data which is easily spoofed".
+Want this to attempt to be as precise as possible while yielding some kind of confidence level and if confidence is low and if possible, may yield a list of possibilities (and each might have its own confidence level) that are not very specific (could just be a country or hemisphere or something very big if it can't do better).
+Would love to be able to use this in `xrayvault`.
+
+Ideas:
+
+* OCR and try to determine languages used in the file(s), in particular on street signs, buildings, landscape, billboards, etc.
+  * Clothing and stuff is also helpful, but not 100%.
+* If available, use Exif data to give a hint to area and try to match that info with things found in the image.
+* Try to identify astronomical items and use that to estimate location.
+E.g., moon and/or sun angle and visibility, how sunny out it is (can indicate rough time of day, so along with sun/moon location, could possibly be useful in location estimation), stars (especially constellations and navigational ones like the North Star).
+* See if any GeoGuesser solvers actually do something like this and what do they do.
+* Compare the image with Google Earth and Google Maps files.
+General photo similarities like building style, street sign styles, road styles, car makes and models, bikes, buses, trucks, terrain (desert, forrest, ocean, etc.), etc.
+* Store information for all photos we're certain about and then compare new photos with existing photos to get estimations.
+* Also scrape/obtain google review photos and do similar comparisons.
+* For indoors places, may be helpful to scrape/obtain social media posts and compare with those.
+  * Exif/check-in data on these may be trustworthy enough to seriously consider.
+* Even if we cannot determine a ton of information about the location, can notify user if there were similar locations in known photos and show them those photos.
+  * Additionally, can use the location information determined from those similar photos to help in identification of the new photo.
+* Probably very heavy in ML implementation
+* Try to OCR unique identifiers in text/stamps/engravings/etc in the image.
+Then, look it up (fuzzy match - anything that's close-ish to the OCR'd value is enough to report on since the OCR may not be perfect).
+Hopefully the OCR tool reports some confidence value, which can be used to influence how fuzzy of a match to perform.
+Would also need access to a lot of data that may not be easy to find/obtain.
+  * To be clear, I mean something similar to what law enforcement does in criminal investigations with identifiers like this.
+Like "this serial number was in lot <X> in country <C>, state/city <blah>, and went to stores <here> to be sold or was sent to <this exact user at this exact address> on Amazon".
+  * Doesn't actually have to be unique identifiers like serial numbers - if it's something unique enough like a collector's edition or limited release version of something, can also narrow things down.
+
 == Maybes
 
 These are just random ideas I've had that idk if I'll go through with.
@@ -141,3 +175,9 @@ Unfortunately, sometimes the browser just...dies or auto-updates or some battery
 This means I lose those tabs.
 Sure, I could just browse in non-private mode, but I like the benefits that private mode gives me.
 I just want the ability to save off those tabs so I can come back to them later (still in private mode) and close and forget about them when I'm ready to close and forget about them.
+
+=== Something something git API(s)
+
+I thought about implementing a Python library for interacting with `git` because I was going through the potential tool list for py-gnu-tools project and thought of `git` as a possibility (but won't - doesn't really fit the paradigm I'm thinkinga about).
+There seems to already be `GitPython` and `gitoxide`.
+TODO: What are git-porcelain and git-plumbing (these are refenced by `GitPython` o pypi site)?
