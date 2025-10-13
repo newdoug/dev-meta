@@ -45,6 +45,21 @@ Will also contain some features that make it easy to put encrypted files into, s
 I think that's useful to store code you really don't want shared with others a little bit secretly.
 In case GitHub or some other source control thing starts to not like that idea and implement preventative measures against that, make it difficult for them to do so (maybe some steg, anti-anti-virus, anti-debugging, anti-RE type stuff)
 
+== Utilitools
+
+Just want a repo with general utilities so I can re-use between projects.
+* Logger
+* config file loading: yaml, json, ini, toml, xml, maybe env files (and optionally store in actual os.environ or just in config object)
+* file watcher
+* directory watcher
+* file/directory finder: find files that match "type (dir, reg, link, etc.)" and/or "size (or range)" and/or matches regex in basename and/or matches regex in whole path name and/or matches access datetime (or range) and/or modify datetime (or range) and/or change datetie (or range) and/or birth datetime (or range) and/or permissions and or ...
+  * max depth
+  * see `find` command for ideas
+  * multi-threaded/multi-processed
+  * whether or not to follow symlinks
+  * filename patterns to skip
+  * directory name patterns to ski
+
 == notifmotif
 
 Basically just a multi-faceted notification library that is usable in lots of different environments (readline-based CLI applications, tmux-style applications, GUIs, just email notifications about things that happen on your computer, etc.).
