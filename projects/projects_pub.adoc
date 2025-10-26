@@ -1,6 +1,7 @@
 = Projects Summary
 
 Summaries of projects I'll be doing that I won't mind sharing at some point.
+TODO: for relevant oens that I don't mind sharing (most), give them the UNLICENSE
 
 == MLC
 
