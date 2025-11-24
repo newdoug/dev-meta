@@ -201,3 +201,10 @@ I just want the ability to save off those tabs so I can come back to them later 
 I thought about implementing a Python library for interacting with `git` because I was going through the potential tool list for py-gnu-tools project and thought of `git` as a possibility (but won't - doesn't really fit the paradigm I'm thinkinga about).
 There seems to already be `GitPython` and `gitoxide`.
 TODO: What are git-porcelain and git-plumbing (these are refenced by `GitPython` o pypi site)?
+
+=== Basic Socket Examples
+
+Maybe write some example programs that are useful for beginners for sockets in general, but also for weird types like this (depending on what it is).
+Like just generic "TCP server and client" code and generic "UDP server and client" code that everybody looks up all the time.
+lsof man page mentions UDPLITE: what is it?
+lsof man page mentions "AFS files": what is it?
