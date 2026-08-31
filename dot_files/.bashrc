@@ -279,6 +279,7 @@ alias gdiff='git diff'
 alias gadd='git add'
 # gs is sometimes "GhostScript" which opens a GUI. Annoying when accidentally typed
 alias gs='git status'
+alias gcr='git clone --recursive'
 
 gitbranchsimple() {
   git branch | grep "^\* " | head -n1 | sed 's/^\* \(.*\)/\1/'
