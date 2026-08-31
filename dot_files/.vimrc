@@ -341,7 +341,7 @@ autocmd BufReadPost,BufNewFile *.py,*.java,*.xml :call SetTabLength(4)
 autocmd BufReadPost,BufNewFile *.vimrc,*.vim,*.lua,*.sql,*.sh,*.bash,*.pl,*.html,*.js,*.c,*.h,*.cpp,*.hpp,*.hxx,*.rb :call SetTabLength(2)
 
 " Set default line length
-autocmd BufRead *.py,*.txt,*.c,*.h,*.hpp,*.cpp,*.hxx,*.md,*.sh,*.bash,*.adoc set tw=118
+autocmd BufRead *.py,*.c,*.h,*.hpp,*.cpp,*.hxx,*.sh,*.bash set tw=118
 
 " press <F4> to fix indentation in entire file
 " nnoremap <F4> gg=G``      " also works
